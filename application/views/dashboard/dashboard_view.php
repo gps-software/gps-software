@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
+    <?php $this->load->view('style/style')?>
+    <?php $this->load->view('style/script')?>
 </head>
 
 <body>
@@ -76,27 +78,12 @@
                                 <div class="card-header">
                                     <div class="card-head-row">
                                         <div class="card-title">User Statistics</div>
-                                        <!-- <div class="card-tools">
-                                            <a href="#" class="btn btn-label-success btn-round btn-sm me-2">
-                                                <span class="btn-label">
-                                                    <i class="fa fa-pencil"></i>
-                                                </span>
-                                                Export
-                                            </a>
-                                            <a href="#" class="btn btn-label-info btn-round btn-sm">
-                                                <span class="btn-label">
-                                                    <i class="fa fa-print"></i>
-                                                </span>
-                                                Print
-                                            </a>
-                                        </div> -->
                                     </div>
                                 </div>
                                 <div class="card-body">
                                     <div class="chart-container" style="min-height: 375px">
-                                        <canvas id="statisticsChart"></canvas>
+                                        <div id="weeklyRentalChart"></div>
                                     </div>
-                                    <div id="myChartLegend"></div>
                                 </div>
                             </div>
                         </div>
@@ -109,14 +96,15 @@
                                 </div>
                                 <div class="card-body p-0">
                                     <div class="table-responsive">
-                                        <!-- Projects table -->
                                         <table class="table align-items-center mb-0">
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th scope="col">No</th>
                                                     <th scope="col">Nama Pengguna</th>
                                                     <th scope="col">Jabatan</th>
+                                                    <th scope="col">Merk</th>
                                                     <th scope="col">Tipe Kendaraan</th>
+                                                    <th scope="col">No Kendaraan</th>
                                                     <th scope="col">Tanggal Pinjam</th>
                                                     <th scope="col">Tanggal Kembali</th>
                                                     <th scope="col">Status</th>
@@ -127,10 +115,69 @@
                                                     <th>1</th>
                                                     <td>Budi</td>
                                                     <td>Jendral</td>
-                                                    <td>SUV</td>
+                                                    <td>Mitsubishi Lancer Ex</td>
+                                                    <td>Sedan</td>
+                                                    <td>3553-07</td>
                                                     <td>2024-03-01</td>
                                                     <td>2024-03-05</td>
                                                     <td class="text-success">Dikembalikan</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>2</th>
+                                                    <td>Sugeng</td>
+                                                    <td>Jendral</td>
+                                                    <td>Mitsubishi Lancer Ex</td>
+                                                    <td>Sedan</td>
+                                                    <td>3553-07</td>
+                                                    <td>2025-03-01</td>
+                                                    <td>0000-00-00</td>
+                                                    <td class="text-primary">Sedang Digunakan</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <div class="card-title">Tabel Kendaraan Dalam Perbaikan</div>
+                                </div>
+                                <div class="card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="table align-items-center mb-0">
+                                            <thead class="thead-light">
+                                                <tr>
+                                                    <th scope="col">No</th>
+                                                    <th scope="col">Merk</th>
+                                                    <th scope="col">Tipe Kendaraan</th>
+                                                    <th scope="col">No Kendaraan</th>
+                                                    <th scope="col">Tanggal Perbaikan</th>
+                                                    <th scope="col">Tanggal Selesai Perbaikan</th>
+                                                    <th scope="col">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <th>1</th>
+                                                    <td>Mitsubishi Lancer Ex</td>
+                                                    <td>Sedan</td>
+                                                    <td>3553-07</td>
+                                                    <td>2024-03-01</td>
+                                                    <td>2024-03-05</td>
+                                                    <td class="text-success">Selesai Perbaikan</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>2</th>
+                                                    <td>Mitsubishi Galant V6</td>
+                                                    <td>Sedan</td>
+                                                    <td>3293-07</td>
+                                                    <td>2024-04-22</td>
+                                                    <td>0000-00-00</td>
+                                                    <td class="text-secondary">Dalam Perbaikan</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -423,6 +470,55 @@
             </div>
         </div>
     </div>
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var options = {
+            series: [{
+                name: "Peminjaman Kendaraan",
+                data: [30, 40, 35, 50, 49, 60, 70] // Data peminjaman per minggu
+            }],
+            chart: {
+                type: 'line',
+                height: 350,
+                zoom: {
+                    enabled: false
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth'
+            },
+            title: {
+                text: 'Peminjaman Kendaraan Per Minggu',
+                align: 'left'
+            },
+            grid: {
+                row: {
+                    colors: ['#f3f3f3', 'transparent'],
+                    opacity: 0.5
+                },
+            },
+            xaxis: {
+                categories: ['Minggu 1', 'Minggu 2', 'Minggu 3', 'Minggu 4', 'Minggu 5', 'Minggu 6',
+                    'Minggu 7'
+                ], // Label minggu
+                title: {
+                    text: 'Minggu'
+                }
+            },
+            yaxis: {
+                title: {
+                    text: 'Jumlah Peminjaman'
+                }
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#weeklyRentalChart"), options);
+        chart.render();
+    });
+    </script>
 </body>
 
 </html>
