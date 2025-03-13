@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Tabel extends CI_Controller {
+class Borrow extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -10,7 +10,7 @@ class Tabel extends CI_Controller {
     }
 
     public function index() {
-        $this->load->view('tabel/tabelpeminjam');
+        $this->load->view('borrow/index');
     }
 
 }

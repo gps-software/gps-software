@@ -18,8 +18,4 @@ class Dashboard extends CI_Controller {
     public function profile() {
         $this->load->view('dashboard/profile_view');
     }
-
-    public function daftar_peminjam() {
-        $this->load->view('dashboard/tabelpeminjam');
-    }
 }
