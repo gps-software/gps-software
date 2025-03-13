@@ -26,4 +26,9 @@ class User_model extends CI_Model {
     public function add_user($data) {
         return $this->db->insert('users', $data);
     }
+
+    function getwhere($table, $data)
+    {
+        return $this->db->get_where($table, $data);
+    }
 }
