@@ -31,4 +31,11 @@ class User_model extends CI_Model {
     {
         return $this->db->get_where($table, $data);
     }
+
+    public function updateUser($id, $data) {
+        $this->db->where('id', $id);
+        return $this->db->update('auth', $data);
+    }
+    
+    
 }
