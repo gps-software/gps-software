@@ -60,6 +60,10 @@ WebFont.load({
 <!-- Sweet Alert -->
 <script src=" <?php echo base_url('assets/js/plugin/sweetalert/sweetalert.min.js') ?>">
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
 <!-- Kaiadmin JS -->
 <script src="<?php echo base_url('assets/js/kaiadmin.min.js') ?>"></script>
