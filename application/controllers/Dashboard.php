@@ -21,6 +21,7 @@ class Dashboard extends CI_Controller {
         $data['peminjam'] = $this->Peminjam_model->get_all_peminjam();
         $this->load->view('dashboard/tabelpeminjam', $data);
     }
+    
     public function tambah_peminjam() {
         if ($this->input->post()) {
             $data = [
@@ -144,6 +145,7 @@ class Dashboard extends CI_Controller {
             $this->session->set_flashdata('success', 'Data berhasil diimport!');
         }
         redirect('dashboard/daftar_peminjam');
+    }
       
     public function profile() {
         $get_where = ['id' => $this->session->userdata('id')];
@@ -177,11 +179,6 @@ class Dashboard extends CI_Controller {
             $this->session->set_flashdata('message', 'Profile berhasil diperbarui!');
             redirect('dashboard/profile');
         }
-    }
-    
-
-    public function daftar_peminjam() {
-        $this->load->view('dashboard/tabelpeminjam');
     }
 }
 ?>
