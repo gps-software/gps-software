@@ -167,61 +167,74 @@
     </div>
     <div id="daftar-mobil">
         <div class="kategori-mobil d-flex justify-content-between items-center">
+            <?php foreach ($kategori as $kat) : ?>
             <div>
-                <a href="#" class="kategori-item">SUV</a>
+                <a href="#" class="kategori-item" onclick="filterByCategory('<?= $kat['kategori'] ?>')">
+                    <?= ucfirst($kat['kategori']) ?>
+                </a>
             </div>
-            <div>
-                <a href="#" class="kategori-item">Sedan</a>
-            </div>
-            <div>
-                <a href="#" class="kategori-item">Mobil Listrik</a>
-            </div>
-            <div>
-                <a href="#" class="kategori-item">Double Cabin</a>
-            </div>
-        </div>
-        <div class="daftar-mobil">
-            <div class="row">
-                <!-- Card 1 -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <h5 class="judul">Mitsubishi Lancer EX</h5>
-                        <p class="sub-judul">Mitsubishi Lancer adalah sebuah mobil sedan buatan pabrikan otomotif
-                            Jepang Mitsubishi Motors.</p>
-                        <img src="https://images.tokopedia.net/img/cache/700/VqbcmM/2024/8/20/de9de33c-8241-47a9-84f6-f659c9c19e34.png"
-                            alt="Mobil 1">
-                        <p class="status">Status: <span style="color: green;">Tersedia</span></p>
-                        <button type="button" class="btn btn-primary">Pinjam</button>
-                    </div>
-                </div>
-                <!-- Card 2 -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <h5 class="judul">Mitsubishi Lancer EX</h5>
-                        <p class="sub-judul">Mitsubishi Lancer adalah sebuah mobil sedan buatan pabrikan otomotif
-                            Jepang Mitsubishi Motors.</p>
-                        <img src="https://images.tokopedia.net/img/cache/700/VqbcmM/2024/8/20/de9de33c-8241-47a9-84f6-f659c9c19e34.png"
-                            alt="Mobil 2">
-                        <p class="status">Status: <span style="color: red;">Tidak Tersedia</span></p>
-                        <button type="button" class="btn btn-primary" disabled>Pinjam</button>
-                    </div>
-                </div>
-                <!-- Card 3 -->
-                <div class="col-md-4">
-                    <div class="card">
-                        <h5 class="judul">Mitsubishi Lancer EX</h5>
-                        <p class="sub-judul">Mitsubishi Lancer adalah sebuah mobil sedan buatan pabrikan otomotif
-                            Jepang Mitsubishi Motors.</p>
-                        <img src="https://images.tokopedia.net/img/cache/700/VqbcmM/2024/8/20/de9de33c-8241-47a9-84f6-f659c9c19e34.png"
-                            alt="Mobil 3">
-                        <p class="status">Status: <span style="color: green;">Tersedia</span></p>
-                        <button type="button" class="btn btn-primary">Pinjam</button>
-                    </div>
-                </div>
-            </div>
+            <?php endforeach; ?>
         </div>
 
+        <div id="daftar-mobil" class="daftar-mobil">
+            <div class="row" id="mobil-list">
+                <?php foreach ($kendaraan as $mobil) : ?>
+                <div class="col-md-4">
+                    <div class="card">
+                        <h5 class="judul"><?= $mobil['nama'] ?></h5>
+                        <p class="sub-judul">Plat Nomor: <?= $mobil['plat_no'] ?></p>
+                        <img src="<?= base_url('assets/img/' . $mobil['image']) ?>" alt="<?= $mobil['nama'] ?>">
+                        <p class="status">Status:
+                            <span style="color: <?= ($mobil['status'] == 'Tersedia') ? 'green' : 'red'; ?>;">
+                                <?= $mobil['status'] ?>
+                            </span>
+                        </p>
+                        <button type="button" class="btn btn-primary"
+                            <?= ($mobil['status'] == 'Tidak Tersedia') ? 'disabled' : ''; ?>>
+                            Pinjam
+                        </button>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
     </div>
+    <script>
+    function filterByCategory(kategori) {
+        let url = "<?= base_url('user/get_by_kategori/') ?>" + kategori;
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                let html = "";
+                data.forEach(mobil => {
+                    html += `
+                <div class="col-md-4">
+                    <div class="card">
+                        <h5 class="judul">${mobil.nama}</h5>
+                        <p class="sub-judul">Plat Nomor: ${mobil.plat_no}</p>
+                        <img src="<?= base_url('assets/img/') ?>${mobil.image}" alt="${mobil.nama}">
+                        <p class="status">Status:
+                            <span style="color: ${mobil.status == 'Tersedia' ? 'green' : 'red'};">
+                                ${mobil.status}
+                            </span>
+                        </p>
+                        <button type="button" class="btn btn-primary" ${mobil.status == 'Tidak Tersedia' ? 'disabled' : ''}>
+                            Pinjam
+                        </button>
+                    </div>
+                </div>`;
+                });
+                document.getElementById("mobil-list").innerHTML = html;
+            })
+            .catch(error => console.error("Error fetching data:", error));
+    }
+    </script>
 </body>
 
 </html>

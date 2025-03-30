@@ -189,6 +189,32 @@
         color: #f44336;
         font-weight: bold;
     }
+
+    .permohonan-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .permohonan-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .back-button {
+        display: inline-block;
+        background: #004080;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        text-decoration: none;
+    }
     </style>
 </head>
 
@@ -205,57 +231,25 @@
         </div>
     </nav>
 
-    <?php if(!isset($permohonan)): ?>
-    <section id="input-nik"
-        style="display: flex; justify-content: center; align-items: center; height: 100vh; text-align: center;">
-        <div
-            style="max-width: 500px; width: 100%; background: #ffffff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-            <h2 class="judul" style="margin-bottom: 25px; font-size: 2rem; color: #004080;">Masukkan NIK</h2>
-            <?php if($this->session->flashdata('error')): ?>
-            <div class="alert alert-danger"><?= $this->session->flashdata('error') ?></div>
-            <?php endif; ?>
-            <form action="<?= base_url('user/check_nik') ?>" method="POST" style="text-align: left;">
-                <div style="margin-bottom: 25px;">
-                    <label for="nik"
-                        style="font-size: 1.3rem; color: #004080; font-weight: bold; display: block; margin-bottom: 12px;">NIK:</label>
-                    <input type="text" id="nik" name="nik" placeholder="Masukkan NIK Anda" required
-                        style="width: 100%; padding: 14px; border: 1px solid #ccc; border-radius: 8px; font-size: 1.1rem; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);" />
-                </div>
-                <button type="submit"
-                    style="background: #004080; color: white; padding: 14px 24px; border: none; border-radius: 8px; cursor: pointer; font-size: 1.1rem; font-weight: bold; transition: background 0.3s ease;">
-                    Kirim
-                </button>
-            </form>
-        </div>
-    </section>
-    <?php else: ?>
-    <section id="daftar-permohonan" style="padding-top: 100px;">
-        <div class="container">
-            <h2 style="color: #004080; margin-bottom: 30px;">Daftar Permohonan Peminjaman</h2>
+    <div class="container" style="padding-top: 100px;">
+        <h2>Detail Permohonan: <?= $detail[0]['no_reg'] ?></h2>
 
-            <?php foreach($permohonan as $p): ?>
-            <div class="card" onclick="window.location.href='<?= base_url('user/detail_permohonan/'.$p['no_reg']) ?>'">
-                <h3>No. Registrasi: <?= $p['no_reg'] ?></h3>
-                <p>Kendaraan: <?= $p['nama_kendaraan'] ?> (<?= $p['plat_no'] ?>)</p>
-                <p>Tanggal: <?= date('d F Y', strtotime($p['date'])) ?></p>
-                <p>Status:
-                    <span class="status-<?= strtolower($p['status']) ?>">
-                        <?php 
-                            $icons = [
-                                'pending' => '⏳',
-                                'disetujui' => '✅', 
-                                'selesai' => '✔️',
-                                'ditolak' => '❌'
-                            ];
-                            echo $icons[strtolower($p['status'])] . ' ' . $p['status'];
-                        ?>
-                    </span>
-                </p>
+        <a href="<?= base_url('user/check_nik') ?>" class="back-button">Kembali ke Daftar Permohonan</a>
+
+        <?php foreach($detail as $d): ?>
+        <div class="riwayat-item">
+            <div class="d-flex justify-content-between">
+                <h4><?= $d['nama_kendaraan'] ?> (<?= $d['plat_no'] ?>)</h4>
+                <span class="status-<?= strtolower($d['status']) ?>"><?= $d['status'] ?></span>
             </div>
-            <?php endforeach; ?>
+            <p>Tanggal: <?= date('d F Y', strtotime($d['date'])) ?></p>
+            <p>Dibuat pada: <?= date('d F Y H:i', strtotime($d['created_date'])) ?></p>
+            <?php if($d['status'] == 'Disetujui'): ?>
+            <p>Disetujui pada: <?= date('d F Y H:i', strtotime($d['updated_date'])) ?></p>
+            <?php endif; ?>
         </div>
-    </section>
-    <?php endif; ?>
+        <?php endforeach; ?>
+    </div>
 </body>
 
 
