@@ -111,7 +111,7 @@
     <div class="login-container">
         <!-- Ilustrasi -->
         <div class="illustration">
-            <img src="../assets/img/mobil.jpg" alt="Pinjam Kendaraan">
+            <img src="./assets/img/mobil.jpg" alt="Pinjam Kendaraan">
         </div>
 
         <!-- Form Login -->

@@ -13,7 +13,7 @@ class Auth extends CI_Controller {
     }
 
     // Menampilkan halaman login
-    public function login()
+    public function index()
     {
         $this->load->view('auth/login');
     }
@@ -32,6 +32,7 @@ class Auth extends CI_Controller {
             $data_sess = [
                 'logged_in' => TRUE,
                 'email' => $result['email'],
+                'username' => $result['username'],
                 'id' => $result['id']
             ];
             $this->session->set_userdata($data_sess);
