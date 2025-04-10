@@ -39,7 +39,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <p>Silakan unduh template terlebih dahulu sebelum mengunggah file.</p>
-                                                    <a href="<?= base_url('assets/template_import.xlsx') ?>" class="btn btn-info">Download Template</a>
+                                                    <a href="<?= base_url('assets/import_peminjam.xlsx') ?>" class="btn btn-info">Download Template</a>
                                                     <form action="<?= base_url('dashboard/import_excel') ?>" method="POST" enctype="multipart/form-data" class="mt-3">
                                                         <input type="file" name="file" class="form-control" required>
                                                         <button type="submit" class="btn btn-warning mt-2">Upload</button>

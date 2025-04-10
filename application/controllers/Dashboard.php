@@ -9,16 +9,20 @@ class Dashboard extends CI_Controller {
         $this->load->library(['session', 'pdf', 'excel']);
         $this->load->model('User_model');
         $this->load->model('Peminjam_model');
+        $this->load->model('Kendaraan_model'); // Tambahkan model kendaraan
     }
 
     public function index() {
         $this->load->view('dashboard/dashboard_view');
     }
 
+    // ===================== PEMINJAM =====================
+
     public function daftar_peminjam() {
         $data['peminjam'] = $this->Peminjam_model->get_all_peminjam();
         $this->load->view('dashboard/tabelpeminjam', $data);
     }
+
     public function tambah_peminjam() {
         if ($this->input->post()) {
             $data = [
@@ -29,18 +33,16 @@ class Dashboard extends CI_Controller {
                 'nik'        => $this->input->post('nik'),
                 'no_telepon' => $this->input->post('no_telepon')
             ];
-            
             if ($this->Peminjam_model->tambah_peminjam($data)) {
                 $this->session->set_flashdata('success', 'Peminjam berhasil ditambahkan!');
             } else {
                 $this->session->set_flashdata('error', 'Gagal menambahkan peminjam!');
             }
-    
             redirect('dashboard/daftar_peminjam');
         }
         $this->load->view('dashboard/tambahpeminjam');
     }
-    
+
     public function edit_peminjam($id) {
         $data['peminjam'] = $this->Peminjam_model->get_peminjam_by_id($id);
         if ($this->input->post()) {
@@ -52,45 +54,32 @@ class Dashboard extends CI_Controller {
                 'nik'        => $this->input->post('nik'),
                 'no_telepon' => $this->input->post('no_telepon')
             ];
-            
             if ($this->Peminjam_model->update_peminjam($id, $update_data)) {
                 $this->session->set_flashdata('success', 'Peminjam berhasil diperbarui!');
             } else {
                 $this->session->set_flashdata('error', 'Gagal memperbarui peminjam!');
             }
-    
             redirect('dashboard/daftar_peminjam');
         }
         $this->load->view('dashboard/editpeminjam', $data);
     }
-    
+
     public function delete_peminjam($id) {
         if ($this->Peminjam_model->delete_peminjam($id)) {
             $this->session->set_flashdata('success', 'Peminjam berhasil dihapus!');
         } else {
             $this->session->set_flashdata('error', 'Gagal menghapus peminjam!');
         }
-    
         redirect('dashboard/daftar_peminjam');
     }
 
-    public function export_pdf()
-    {
-        $this->load->model('Peminjam_model');
+    public function export_pdf() {
         $data['peminjam'] = $this->Peminjam_model->get_all_peminjam(); 
-    
-        // Load library Pdf
-        $this->load->library('pdf');
-    
-        // Gunakan fungsi yang sudah dibuat di Pdf.php
         $this->pdf->load_view('dashboard/export_peminjam_pdf', $data);
         $this->pdf->render();
-        
-        // Kirim output PDF untuk di-download
         $this->pdf->stream("data_peminjam.pdf");
-    }    
-    
-    
+    }
+
     public function export_excel() {
         $spreadsheet = new PhpOffice\PhpSpreadsheet\Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
@@ -126,7 +115,6 @@ class Dashboard extends CI_Controller {
         if (isset($_FILES['file']['name'])) {
             $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($_FILES['file']['tmp_name']);
             $sheetData = $spreadsheet->getActiveSheet()->toArray();
-
             $data = [];
             for ($i = 1; $i < count($sheetData); $i++) {
                 $data[] = [
@@ -142,6 +130,181 @@ class Dashboard extends CI_Controller {
             $this->session->set_flashdata('success', 'Data berhasil diimport!');
         }
         redirect('dashboard/daftar_peminjam');
+    }
+
+    // ===================== KENDARAAN =====================
+
+    public function daftar_kendaraan() {
+        $data['kendaraan'] = $this->Kendaraan_model->get_all_kendaraan();
+        $this->load->view('dashboard/tabelkendaraan', $data);
+    }
+
+    public function tambah_kendaraan() {
+        if ($this->input->post()) {
+            $config['upload_path'] = './assets/img/kendaraan/';
+            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+            $config['max_size'] = 2048;
+            $config['encrypt_name'] = TRUE;
+    
+            $this->load->library('upload', $config);
+    
+            $image = null;
+            if (!empty($_FILES['image']['name'])) {
+                if ($this->upload->do_upload('image')) {
+                    $upload_data = $this->upload->data();
+                    $image = $upload_data['file_name'];
+                } else {
+                    $this->session->set_flashdata('error', $this->upload->display_errors());
+                    redirect('dashboard/tambah_kendaraan');
+                    return;
+                }
+            }
+    
+            $data = [
+                'nama'       => $this->input->post('nama'),
+                'plat_no'    => $this->input->post('plat_no'),
+                'warna'      => $this->input->post('warna'),
+                'imei_gps'   => $this->input->post('imei_gps'),
+                'image'      => $image,
+                'status'     => $this->input->post('status'),
+            ];
+    
+            if ($this->Kendaraan_model->tambah_kendaraan($data)) {
+                $this->session->set_flashdata('success', 'Kendaraan berhasil ditambahkan!');
+            } else {
+                $this->session->set_flashdata('error', 'Gagal menambahkan kendaraan!');
+            }
+    
+            redirect('dashboard/daftar_kendaraan');
+        }
+    
+        $this->load->view('dashboard/tambahkendaraan');
+    }
+    
+
+    public function edit_kendaraan($id) {
+        $kendaraan = $this->Kendaraan_model->get_kendaraan_by_id($id);
+    
+        if (!$kendaraan) {
+            $this->session->set_flashdata('error', 'Data kendaraan tidak ditemukan.');
+            redirect('dashboard/daftar_kendaraan');
+        }
+    
+        if ($this->input->post()) {
+            // Konfigurasi upload
+            $config['upload_path'] = './assets/img/kendaraan/';
+            $config['allowed_types'] = 'jpg|jpeg|png|gif';
+            $config['max_size'] = 2048;
+            $config['encrypt_name'] = TRUE;
+    
+            $this->load->library('upload', $config);
+    
+            $image = $kendaraan['image']; // default pakai gambar lama
+    
+            if (!empty($_FILES['image']['name'])) {
+                if ($this->upload->do_upload('image')) {
+                    $upload_data = $this->upload->data();
+                    $new_image = $upload_data['file_name'];
+    
+                    // Hapus gambar lama jika ada
+                    if ($kendaraan['image'] && file_exists('./assets/img/kendaraan/' . $kendaraan['image'])) {
+                        unlink('./assets/img/kendaraan/' . $kendaraan['image']);
+                    }
+    
+                    $image = $new_image;
+                } else {
+                    $this->session->set_flashdata('error', $this->upload->display_errors());
+                    redirect('dashboard/edit_kendaraan/' . $id);
+                    return;
+                }
+            }
+    
+            $data = [
+                'nama'     => $this->input->post('nama'),
+                'plat_no'  => $this->input->post('plat_no'),
+                'warna'    => $this->input->post('warna'),
+                'imei_gps' => $this->input->post('imei_gps'),
+                'image'    => $image,
+                'status'   => $this->input->post('status'),
+            ];
+    
+            if ($this->Kendaraan_model->update_kendaraan($id, $data)) {
+                $this->session->set_flashdata('success', 'Data kendaraan berhasil diupdate!');
+            } else {
+                $this->session->set_flashdata('error', 'Gagal memperbarui data kendaraan!');
+            }
+    
+            redirect('dashboard/daftar_kendaraan');
+        }
+    
+        $data['kendaraan'] = $kendaraan;
+        $this->load->view('dashboard/editkendaraan', $data);
+    }
+    
+
+    public function delete_kendaraan($id) {
+        if ($this->Kendaraan_model->delete_kendaraan($id)) {
+            $this->session->set_flashdata('success', 'Kendaraan berhasil dihapus!');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal menghapus kendaraan!');
+        }
+        redirect('dashboard/daftar_kendaraan');
+    }
+
+    public function export_kendaraan_excel() {
+        $spreadsheet = new PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+        $kendaraan = $this->Kendaraan_model->get_kendaraan_for_export();
+
+        $sheet->setCellValue('A1', 'Nama');
+        $sheet->setCellValue('B1', 'Plat_no');
+        $sheet->setCellValue('C1', 'Warna');
+        $sheet->setCellValue('D1', 'Imei_gps');
+        $sheet->setCellValue('E1', 'Status');
+
+        $row = 2;
+        foreach ($kendaraan as $p) {
+            $sheet->setCellValue("A$row", $p['nama']);
+            $sheet->setCellValue("B$row", $p['plat_no']);
+            $sheet->setCellValue("C$row", $p['warna']);
+            $sheet->setCellValue("D$row", $p['imei_gps']);
+            $sheet->setCellValue("E$row", $p['status']);
+            $row++;
+        }
+
+        $writer = new PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $filename = 'data_kendaraan.xlsx';
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header("Content-Disposition: attachment; filename=$filename");
+        $writer->save('php://output');
+    }
+
+    public function export_kendaraan_pdf() {
+        $data['kendaraan'] = $this->Kendaraan_model->get_all_kendaraan(); 
+        $this->pdf->load_view('dashboard/export_kendaraan_pdf', $data);
+        $this->pdf->render();
+        $this->pdf->stream("data_kendaraan.pdf");
+    }
+
+    public function import_kendaraan_excel() {
+        if (isset($_FILES['file']['name'])) {
+            $spreadsheet = PhpOffice\PhpSpreadsheet\IOFactory::load($_FILES['file']['tmp_name']);
+            $sheetData = $spreadsheet->getActiveSheet()->toArray();
+            $data = [];
+            for ($i = 1; $i < count($sheetData); $i++) {
+                $data[] = [
+                    'nama' => $sheetData[$i][0],
+                    'plat_no'     => $sheetData[$i][1],
+                    'warna'          => $sheetData[$i][2],
+                    'imei_gps'       => $sheetData[$i][3],
+                    'status'         => $sheetData[$i][4],
+                ];
+            }
+            $this->Kendaraan_model->insert_batch($data);
+            $this->session->set_flashdata('success', 'Data kendaraan berhasil diimport!');
+        }
+        redirect('dashboard/daftar_kendaraan');
     }
 }
 ?>
