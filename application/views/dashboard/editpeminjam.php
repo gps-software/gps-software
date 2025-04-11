@@ -49,7 +49,7 @@
                                             <input type="text" name="no_telepon" class="form-control" value="<?= $peminjam['no_telepon']; ?>" required>
                                         </div>
                                         <button type="submit" class="btn btn-primary">Simpan</button>
-                                        <a href="<?= site_url('tabel'); ?>" class="btn btn-secondary">Batal</a>
+                                        <a href="<?= site_url('dashboard/daftar_peminjam'); ?>" class="btn btn-secondary">Batal</a>
                                     </form>
                                 </div>
                             </div>
