@@ -57,14 +57,14 @@ class User_model extends CI_Model {
         
         // Subquery untuk mendapatkan no_reg terbaru per client
         $this->db->select('no_reg, MAX(created_date) as latest_date');
-        $this->db->from('pinjaman');
+        $this->db->from('request');
         $this->db->where('id_client', $id_client);
         $this->db->group_by('no_reg');
         $subquery = $this->db->get_compiled_select();
         
         // Query utama
         $this->db->select('p.no_reg, p.date, p.status, k.nama as nama_kendaraan, k.plat_no');
-        $this->db->from('pinjaman p');
+        $this->db->from('request p');
         $this->db->join('kendaraan k', 'p.id_kendaraan = k.id');
         $this->db->join("($subquery) latest", 'p.no_reg = latest.no_reg AND p.created_date = latest.latest_date');
         $this->db->where('p.id_client', $id_client);  // PERBAIKAN DI SINI
@@ -74,7 +74,7 @@ class User_model extends CI_Model {
 
     public function get_riwayat_by_no_reg($no_reg) {
         $this->db->select('p.*, k.nama as nama_kendaraan, k.plat_no');
-        $this->db->from('pinjaman p');
+        $this->db->from('request p');
         $this->db->join('kendaraan k', 'p.id_kendaraan = k.id');
         $this->db->where('p.no_reg', $no_reg);
         $this->db->order_by('p.created_date', 'DESC');
@@ -107,7 +107,7 @@ class User_model extends CI_Model {
     }
     
     public function insert_pinjaman($data) {
-        $this->db->insert('pinjaman', $data);
+        $this->db->insert('request', $data);
         return $this->db->insert_id();
     }
 

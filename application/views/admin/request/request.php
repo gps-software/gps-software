@@ -19,13 +19,15 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div class="card-header d-flex justify-content-between align-items-center">
+                                <div
+                                    class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
                                     <h4 class="card-title">Data Request</h4>
-                                    <div>
-                                        <a href="<?= base_url('dashboard/export_pdf') ?>" class="btn btn-primary">Export
+                                    <div class="card-header">
+                                        <a href="<?= base_url('dashboard/export_pdf') ?>"
+                                            class="btn btn-info btn-sm">Export
                                             PDF</a>
                                         <a href="<?= base_url('dashboard/export_excel') ?>"
-                                            class="btn btn-primary">Export Excel</a>
+                                            class="btn btn-info btn-sm">Export Excel</a>
                                     </div>
                                 </div>
                                 <div class="card-body">
@@ -69,20 +71,22 @@
                                                             }
                                                         ?>
                                                     </td>
-                                                    <td style="text-align: center;">
-                                                        <a href="<?= site_url('dashboard/approved_request/' . $r['id']); ?>"
-                                                            class="btn btn-primary btn-sm <?= $r['status'] != 'P' ? 'disabled' : '' ?>"
-                                                            title="Setujui"
-                                                            <?= $r['status'] != 'P' ? 'aria-disabled="true" tabindex="-1"' : '' ?>>
-                                                            Setujui
-                                                        </a>
+                                                    <td class="text-center">
+                                                        <div class="d-flex flex-wrap justify-content-center gap-2">
+                                                            <a href="<?= site_url('dashboard/approved_request/' . $r['id']); ?>"
+                                                                class="btn btn-primary btn-sm <?= $r['status'] != 'P' ? 'disabled' : '' ?>"
+                                                                title="Setujui"
+                                                                <?= $r['status'] != 'P' ? 'aria-disabled="true" tabindex="-1"' : '' ?>>
+                                                                Setujui
+                                                            </a>
 
-                                                        <a href="<?= site_url('dashboard/rejected_request/' . $r['id']); ?>"
-                                                            class="btn btn-danger btn-sm <?= $r['status'] != 'P' ? 'disabled' : '' ?>"
-                                                            title="Tolak"
-                                                            <?= $r['status'] != 'P' ? 'aria-disabled="true" tabindex="-1"' : '' ?>>
-                                                            Tolak
-                                                        </a>
+                                                            <a href="<?= site_url('dashboard/rejected_request/' . $r['id']); ?>"
+                                                                class="btn btn-danger btn-sm <?= $r['status'] != 'P' ? 'disabled' : '' ?>"
+                                                                title="Tolak"
+                                                                <?= $r['status'] != 'P' ? 'aria-disabled="true" tabindex="-1"' : '' ?>>
+                                                                Tolak
+                                                            </a>
+                                                        </div>
                                                     </td>
                                                 </tr>
                                                 <?php endforeach; ?>

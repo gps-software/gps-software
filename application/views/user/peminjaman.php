@@ -170,22 +170,22 @@
         background: #e6f0ff;
     }
 
-    .status-pending {
+    .status-P {
         color: #ff9800;
         font-weight: bold;
     }
 
-    .status-disetujui {
+    .status-A {
         color: #4caf50;
         font-weight: bold;
     }
 
-    .status-selesai {
+    .status-D {
         color: #2196f3;
         font-weight: bold;
     }
 
-    .status-ditolak {
+    .status-R {
         color: #f44336;
         font-weight: bold;
     }
@@ -239,17 +239,30 @@
                 <p>Kendaraan: <?= $p['nama_kendaraan'] ?> (<?= $p['plat_no'] ?>)</p>
                 <p>Tanggal: <?= date('d F Y', strtotime($p['date'])) ?></p>
                 <p>Status:
-                    <span class="status-<?= strtolower($p['status']) ?>">
-                        <?php 
-                            $icons = [
-                                'pending' => '⏳',
-                                'disetujui' => '✅', 
-                                'selesai' => '✔️',
-                                'ditolak' => '❌'
-                            ];
-                            echo $icons[strtolower($p['status'])] . ' ' . $p['status'];
-                        ?>
-                    </span>
+                    <?php
+                        $icons = [
+                            'P' => '⏳',
+                            'A' => '✅',
+                            'D' => '✔️',
+                            'R' => '❌'
+                        ];
+
+                        $labels = [
+                            'P' => ['label' => 'Tertunda', 'class' => 'bg-secondary'],
+                            'A' => ['label' => 'Disetujui', 'class' => 'bg-primary'],
+                            'D' => ['label' => 'Selesai', 'class' => 'bg-success'],
+                            'R' => ['label' => 'Ditolak', 'class' => 'bg-danger'],
+                        ];
+
+                        $status = $p['status'];
+                        $icon = $icons[$status] ?? '❓';
+                        $label = $labels[$status]['label'] ?? 'Tidak Diketahui';
+                        $class = $labels[$status]['class'] ?? 'bg-dark';
+
+                        echo "<span class='status-" . strtolower($status) . "'>
+                                $icon <span class='badge $class'>$label</span>
+                            </span>";
+                    ?>
                 </p>
             </div>
             <?php endforeach; ?>
@@ -257,6 +270,5 @@
     </section>
     <?php endif; ?>
 </body>
-
 
 </html>

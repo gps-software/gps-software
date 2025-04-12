@@ -23,33 +23,44 @@
                                     <h4 class="card-title">Edit Peminjam</h4>
                                 </div>
                                 <div class="card-body">
-                                    <form action="<?= site_url('dashboard/edit_peminjam/' . $peminjam['id']); ?>" method="post">
+                                    <form action="<?= site_url('dashboard/edit_peminjam/' . $peminjam['id']); ?>"
+                                        method="post">
                                         <div class="form-group">
                                             <label>Nama</label>
-                                            <input type="text" name="nama" class="form-control" value="<?= $peminjam['nama']; ?>" required>
+                                            <input type="text" name="nama" class="form-control"
+                                                value="<?= $peminjam['nama']; ?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Jabatan</label>
-                                            <input type="text" name="jabatan" class="form-control" value="<?= $peminjam['jabatan']; ?>" required>
+                                            <input type="text" name="jabatan" class="form-control"
+                                                value="<?= $peminjam['jabatan']; ?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label>Pangkat</label>
-                                            <input type="text" name="pangkat" class="form-control" value="<?= $peminjam['pangkat']; ?>" required>
+                                            <input type="text" name="pangkat" class="form-control"
+                                                value="<?= $peminjam['pangkat']; ?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label>NRP</label>
-                                            <input type="text" name="nrp" class="form-control" value="<?= $peminjam['nrp']; ?>" required>
+                                            <input type="text" name="nrp" class="form-control"
+                                                value="<?= $peminjam['nrp']; ?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label>NIK</label>
-                                            <input type="text" name="nik" class="form-control" value="<?= $peminjam['nik']; ?>" required>
+                                            <input type="text" name="nik" class="form-control"
+                                                value="<?= $peminjam['nik']; ?>" required>
                                         </div>
                                         <div class="form-group">
                                             <label>No Telepon</label>
-                                            <input type="text" name="no_telepon" class="form-control" value="<?= $peminjam['no_telepon']; ?>" required>
+                                            <input type="text" name="no_telepon" class="form-control"
+                                                value="<?= $peminjam['no_telepon']; ?>" required>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
-                                        <a href="<?= site_url('dashboard/daftar_peminjam'); ?>" class="btn btn-secondary">Batal</a>
+                                        <hr>
+                                        <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
+                                            <a href="<?= site_url('dashboard/daftar_peminjam'); ?>"
+                                                class="btn btn-danger btn-sm">Batal</a>
+                                            <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -61,21 +72,21 @@
     </div>
 
     <script>
-        <?php if ($this->session->flashdata('success')): ?>
-            Swal.fire({
-                icon: 'success',
-                title: 'Sukses!',
-                text: '<?= $this->session->flashdata('success') ?>',
-                showConfirmButton: false,
-                timer: 2000
-            });
-        <?php elseif ($this->session->flashdata('error')): ?>
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: '<?= $this->session->flashdata('error') ?>',
-            });
-        <?php endif; ?>
+    <?php if ($this->session->flashdata('success')): ?>
+    Swal.fire({
+        icon: 'success',
+        title: 'Sukses!',
+        text: '<?= $this->session->flashdata('success') ?>',
+        showConfirmButton: false,
+        timer: 2000
+    });
+    <?php elseif ($this->session->flashdata('error')): ?>
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '<?= $this->session->flashdata('error') ?>',
+    });
+    <?php endif; ?>
     </script>
 
 
