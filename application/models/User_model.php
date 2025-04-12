@@ -42,7 +42,7 @@ class User_model extends CI_Model {
     }
 
     public function get_kendaraan($limit = 10) {
-        return $this->db->limit($limit)->get('kendaraan')->result_array();
+        return $this->db->limit($limit)->where('status', 'Tersedia')->get('kendaraan')->result_array();
     }
 
     public function get_kendaraan_by_kategori($kategori) {
@@ -83,6 +83,32 @@ class User_model extends CI_Model {
 
     public function get_client_by_nik($nik) {
         return $this->db->get_where('peminjam', ['nik' => $nik])->row_array();
+    }
+
+    public function get_peminjam_by_nik($nik) {
+        $this->db->where('nik', $nik);
+        $query = $this->db->get('peminjam');
+        return $query->row();
+    }
+    
+    public function insert_peminjam($data) {
+        $this->db->insert('peminjam', $data);
+        return $this->db->insert_id();
+    }
+    
+    public function update_peminjam($id, $data) {
+        $this->db->where('id', $id);
+        return $this->db->update('peminjam', $data);
+    }
+    
+    public function update_kendaraan($id, $data) {
+        $this->db->where('id', $id);
+        return $this->db->update('kendaraan', $data);
+    }
+    
+    public function insert_pinjaman($data) {
+        $this->db->insert('pinjaman', $data);
+        return $this->db->insert_id();
     }
 
 }
