@@ -189,10 +189,10 @@
                                 <?= $mobil['status'] ?>
                             </span>
                         </p>
-                        <button type="button" class="btn btn-primary"
-                            <?= ($mobil['status'] == 'Tidak Tersedia') ? 'disabled' : ''; ?>>
+                        <a href="<?= base_url('user/pinjam_mobil/' . $mobil['id']) ?>" class="btn btn-primary 
+                            <?= ($mobil['status'] == 'Tidak Tersedia') ? 'disabled' : ''; ?>">
                             Pinjam
-                        </button>
+                        </a>
                     </div>
                 </div>
                 <?php endforeach; ?>
@@ -224,9 +224,9 @@
                                 ${mobil.status}
                             </span>
                         </p>
-                        <button type="button" class="btn btn-primary" ${mobil.status == 'Tidak Tersedia' ? 'disabled' : ''}>
+                        <a href="http://localhost/gps-software/user/pinjam_mobil/${mobil.id}" class="btn btn-primary ${mobil.status == 'Tidak Tersedia' ? 'disabled' : ''}">
                             Pinjam
-                        </button>
+                        </a>
                     </div>
                 </div>`;
                 });
