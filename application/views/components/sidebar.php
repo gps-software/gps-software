@@ -48,7 +48,10 @@
                                     <span class="sub-item">Daftar Peminjam</span>
                                 </a>
                                 <a href=<?php echo base_url('dashboard/daftar_kendaraan')?>>
-                                    <span class="sub-item">Daftar kendaraan</span>
+                                    <span class="sub-item">Daftar Kendaraan</span>
+                                </a>
+                                <a href=<?php echo base_url('dashboard/daftar_req')?>>
+                                    <span class="sub-item">Daftar Request</span>
                                 </a>
                             </li>
                         </ul>

@@ -11,7 +11,8 @@ class Dashboard extends CI_Controller {
         $this->load->model('Peminjam_model');
         $this->load->library('session');
         $this->load->library('form_validation');
-        $this->load->model('Kendaraan_model'); // Tambahkan model kendaraan
+        $this->load->model('Kendaraan_model');
+        $this->load->model('Request_model');
     }
 
     public function index() {
@@ -22,7 +23,7 @@ class Dashboard extends CI_Controller {
 
     public function daftar_peminjam() {
         $data['peminjam'] = $this->Peminjam_model->get_all_peminjam();
-        $this->load->view('dashboard/tabelpeminjam', $data);
+        $this->load->view('admin/user/tabelpeminjam', $data);
     }
     
 
@@ -43,7 +44,7 @@ class Dashboard extends CI_Controller {
             }
             redirect('dashboard/daftar_peminjam');
         }
-        $this->load->view('dashboard/tambahpeminjam');
+        $this->load->view('admin/user/tambahpeminjam');
     }
 
     public function edit_peminjam($id) {
@@ -64,7 +65,7 @@ class Dashboard extends CI_Controller {
             }
             redirect('dashboard/daftar_peminjam');
         }
-        $this->load->view('dashboard/editpeminjam', $data);
+        $this->load->view('admin/user/editpeminjam', $data);
     }
 
     public function delete_peminjam($id) {
@@ -78,7 +79,7 @@ class Dashboard extends CI_Controller {
 
     public function export_pdf() {
         $data['peminjam'] = $this->Peminjam_model->get_all_peminjam(); 
-        $this->pdf->load_view('dashboard/export_peminjam_pdf', $data);
+        $this->pdf->load_view('admin/user/export_peminjam_pdf', $data);
         $this->pdf->render();
         $this->pdf->stream("data_peminjam.pdf");
     }
@@ -139,7 +140,7 @@ class Dashboard extends CI_Controller {
 
     public function daftar_kendaraan() {
         $data['kendaraan'] = $this->Kendaraan_model->get_all_kendaraan();
-        $this->load->view('dashboard/tabelkendaraan', $data);
+        $this->load->view('admin/vehicle/tabelkendaraan', $data);
     }
 
     public function tambah_kendaraan() {
@@ -181,7 +182,7 @@ class Dashboard extends CI_Controller {
             redirect('dashboard/daftar_kendaraan');
         }
     
-        $this->load->view('dashboard/tambahkendaraan');
+        $this->load->view('admin/vehicle/tambahkendaraan');
     }
     
 
@@ -241,7 +242,7 @@ class Dashboard extends CI_Controller {
         }
     
         $data['kendaraan'] = $kendaraan;
-        $this->load->view('dashboard/editkendaraan', $data);
+        $this->load->view('admin/vehicle/editkendaraan', $data);
     }
     
 
@@ -285,7 +286,7 @@ class Dashboard extends CI_Controller {
 
     public function export_kendaraan_pdf() {
         $data['kendaraan'] = $this->Kendaraan_model->get_all_kendaraan(); 
-        $this->pdf->load_view('dashboard/export_kendaraan_pdf', $data);
+        $this->pdf->load_view('admin/vehicle/export_kendaraan_pdf', $data);
         $this->pdf->render();
         $this->pdf->stream("data_kendaraan.pdf");
     }
@@ -309,6 +310,52 @@ class Dashboard extends CI_Controller {
         }
         redirect('dashboard/daftar_kendaraan');
     }
+
+    // ===================== PEMINJAMAN =====================
+
+    public function daftar_req() {
+        $requests = $this->Request_model->get_all_request();
+
+        foreach ($requests as &$req) {
+            $client = $this->Peminjam_model->get_name_by_id($req['id_client']);
+            $kendaraan = $this->Kendaraan_model->get_data_by_id($req['id_kendaraan']);
+            
+            $req['nama_client'] = $client ?? 'Unknown';
+            $req['model_kendaraan'] = $kendaraan ?? 'Unknown';
+        }
+        
+        $data['req'] = $requests;
+        $this->load->view('admin/request/request', $data);
+    }
+
+    public function approved_request($id) {
+        $req = $this->Request_model->get_request_by_id($id);
+    
+        if ($req) {
+            $this->Request_model->insert_history($req);
+            $this->Request_model->update_status($id, 'A');
+    
+            redirect('dashboard/daftar_req');
+            $this->session->set_flashdata('success', 'Berhasil Menyetujui Request!');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal Menyetujui Request!');
+        }
+    }
+
+    public function rejected_request($id) {
+        $req = $this->Request_model->get_request_by_id($id);
+    
+        if ($req) {
+            $this->Request_model->insert_history($req);
+            $this->Request_model->update_status($id, 'R');
+    
+            $this->session->set_flashdata('success', 'Berhasil Menolak Request!');
+            redirect('dashboard/daftar_req');
+        } else {
+            $this->session->set_flashdata('error', 'Gagal menolak request!');
+            redirect('dashboard/daftar_req');
+        }
+    }    
       
     public function profile() {
         $get_where = ['id' => $this->session->userdata('id')];

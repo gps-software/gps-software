@@ -32,4 +32,11 @@ class Kendaraan_model extends CI_Model {
     public function insert_batch($data) {
         return $this->db->insert_batch('kendaraan', $data);
     }
+    
+    public function get_data_by_id($id) {
+        $result = $this->db->get_where('kendaraan', ['id' => $id])->row_array();
+        $nama = $result['nama'] ?? '';
+        $plat = $result['plat_no'] ?? '';
+        return $nama . ' - ' . $plat;
+    }    
 }

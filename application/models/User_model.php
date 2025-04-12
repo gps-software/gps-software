@@ -82,23 +82,23 @@ class User_model extends CI_Model {
     }
 
     public function get_client_by_nik($nik) {
-        return $this->db->get_where('peminjam', ['nik' => $nik])->row_array();
+        return $this->db->get_where('user', ['nik' => $nik])->row_array();
     }
 
     public function get_peminjam_by_nik($nik) {
         $this->db->where('nik', $nik);
-        $query = $this->db->get('peminjam');
+        $query = $this->db->get('user');
         return $query->row();
     }
     
     public function insert_peminjam($data) {
-        $this->db->insert('peminjam', $data);
+        $this->db->insert('user', $data);
         return $this->db->insert_id();
     }
     
     public function update_peminjam($id, $data) {
         $this->db->where('id', $id);
-        return $this->db->update('peminjam', $data);
+        return $this->db->update('user', $data);
     }
     
     public function update_kendaraan($id, $data) {
