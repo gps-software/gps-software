@@ -240,13 +240,41 @@
         <div class="riwayat-item">
             <div class="d-flex justify-content-between">
                 <h4><?= $d['nama_kendaraan'] ?> (<?= $d['plat_no'] ?>)</h4>
-                <span class="status-<?= strtolower($d['status']) ?>"><?= $d['status'] ?></span>
+                <span class="status-<?= strtolower($d['status']) ?>">
+                    <?php
+                        $status = htmlspecialchars($d['status']);
+
+                        if ($status === 'A') {
+                            echo '<span class="badge rounded-pill text-bg-success">Disetujui</span>';
+                        } elseif ($status === 'R') {
+                            echo '<span class="badge rounded-pill text-bg-danger">Ditolak</span>';
+                        } elseif ($status === 'D') {
+                            echo '<span class="badge rounded-pill text-bg-info">Selesai</span>';
+                        } elseif ($status === 'P') {
+                            echo '<span class="badge rounded-pill text-bg-info">Pending</span>';
+                        } else {
+                            echo '<span class="badge rounded-pill text-bg-dark">' . $status . '</span>';
+                        }
+                    ?>
+                </span>
             </div>
             <p>Tanggal: <?= date('d F Y', strtotime($d['date'])) ?></p>
             <p>Dibuat pada: <?= date('d F Y H:i', strtotime($d['created_date'])) ?></p>
-            <?php if($d['status'] == 'Disetujui'): ?>
-            <p>Disetujui pada: <?= date('d F Y H:i', strtotime($d['updated_date'])) ?></p>
-            <?php endif; ?>
+            <?php
+                $status = htmlspecialchars($d['status']);
+
+                if ($status === 'A') {
+                    echo '<p>Disetujui Pada: </p>' . date('d F Y H:i', strtotime($d['updated_date']));
+                } elseif ($status === 'R') {
+                    echo '<p>Ditolak Pada: </p>' . date('d F Y H:i', strtotime($d['updated_date']));
+                } elseif ($status === 'D') {
+                    echo '<p>Selesai Pada:</p>'. date('d F Y H:i', strtotime($d['updated_date']));
+                } elseif ($status === 'P') {
+                    echo '<p>Pending</p>';
+                } else {
+                    echo '<p>' . $status . '</p>';
+                }
+            ?>
         </div>
         <?php endforeach; ?>
     </div>

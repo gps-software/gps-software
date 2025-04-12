@@ -56,13 +56,13 @@
                                             <label>Status</label>
                                             <select name="status" class="form-control">
                                                 <option value="Tersedia"
-                                                    <?= $kendaraan['status'] == 'Tersedia' ? 'selected' : '' ?>>Tersedia
+                                                    <?= $kendaraan['status'] == 'A' ? 'selected' : '' ?>>Tersedia
                                                 </option>
                                                 <option value="Digunakan"
-                                                    <?= $kendaraan['status'] == 'Digunakan' ? 'selected' : '' ?>>
+                                                    <?= $kendaraan['status'] == 'Us' ? 'selected' : '' ?>>
                                                     Digunakan</option>
                                                 <option value="Servis"
-                                                    <?= $kendaraan['status'] == 'Servis' ? 'selected' : '' ?>>Servis
+                                                    <?= $kendaraan['status'] == 'S' ? 'selected' : '' ?>>Servis
                                                 </option>
                                             </select>
                                         </div>

@@ -105,17 +105,22 @@
                                                             -
                                                             <?php endif; ?>
                                                         </td>
-                                                        <td class="text-center"><?php
-                                                            $status = htmlspecialchars($k['status']);
+                                                        <td class="text-center">
+                                                            <?php
+                                                                $status = htmlspecialchars($k['status']);
 
-                                                            if ($status === 'A') {
-                                                                echo '<span class="badge rounded-pill text-bg-success">Tersedia</span>';
-                                                            } elseif ($status === 'U') {
-                                                                echo '<span class="badge rounded-pill text-bg-danger">Tidak Tersedia</span>';
-                                                            } else {
-                                                                echo '<span class="badge rounded-pill text-bg-dark">' . $status . '</span>';
-                                                            }
-                                                        ?>
+                                                                if ($status === 'A') {
+                                                                    echo '<span class="badge rounded-pill text-bg-success">Tersedia</span>';
+                                                                } elseif ($status === 'U') {
+                                                                    echo '<span class="badge rounded-pill text-bg-danger">Tidak Tersedia</span>';
+                                                                } elseif ($status === 'Us') {
+                                                                    echo '<span class="badge rounded-pill text-bg-info">Digunakan</span>';
+                                                                } elseif ($status === 'S') {
+                                                                    echo '<span class="badge rounded-pill text-bg-info">Service</span>';
+                                                                } else {
+                                                                    echo '<span class="badge rounded-pill text-bg-dark">' . $status . '</span>';
+                                                                }
+                                                            ?>
                                                         </td>
                                                         <td class="text-center">
                                                             <div class="d-flex flex-wrap justify-content-center gap-2">
