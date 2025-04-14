@@ -279,7 +279,7 @@
                             </li>
                             <li>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="<?= base_url('dashboard/profile') ?>">
+                                <a class="dropdown-item" href="<?= base_url('profile') ?>">
                                     <i class="fas fa-user-cog me-2"></i> Account Setting
                                 </a>
                                 <div class="dropdown-divider"></div>

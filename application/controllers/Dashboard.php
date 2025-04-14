@@ -471,7 +471,7 @@ class Dashboard extends CI_Controller {
             $this->User_model->updateUser($id, $data);
 
             $this->session->set_flashdata('message', 'Profile berhasil diperbarui!');
-            redirect('dashboard/profile');
+            redirect('profile');
         }
     }
 }
