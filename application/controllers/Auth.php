@@ -39,7 +39,7 @@ class Auth extends CI_Controller {
             redirect(base_url()."dashboard");
         } else {
             $this->session->set_flashdata('error', 'Email atau kata sandi salah.');
-            redirect(base_url().'auth');
+            redirect(base_url().'login');
         }
     }
 
@@ -47,7 +47,7 @@ class Auth extends CI_Controller {
     // Logout
     public function logout() {
         $this->session->sess_destroy();
-        redirect(base_url('auth'));
+        redirect(base_url('login'));
     }
 }
 ?>

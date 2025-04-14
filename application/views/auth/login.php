@@ -121,22 +121,33 @@
                 <p class="text-muted">Masuk untuk meminjam kendaraan dengan mudah dan cepat</p>
             </div>
             <form action="<?= base_url('auth/aksi_login'); ?>" method="POST">
-                <div class="mb-3">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" placeholder="Masukkan email" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" class="form-control" name="password" placeholder="Masukkan password"
-                        required>
-                </div>
-                <button type="submit" class="btn btn-primary w-100">Login</button>
-                <div class="text-center mt-3">
-                    <a href="register" class="forgot-password">Belum punya akun? Daftar</a>
-                </div>
-            </form>
-        </div>
+           <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-control" name="email" placeholder="Masukkan email" required>
     </div>
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control" name="password" placeholder="Masukkan password" required>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">Login</button>
+
+    <!-- Spinner -->
+    <div id="spinner" class="text-center mt-3" style="display: none;">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <p>Memproses login...</p>
+    </div>
+</form>
+
+<script>
+    const form = document.querySelector("form");
+    const spinner = document.getElementById("spinner");
+
+    form.addEventListener("submit", function () {
+        spinner.style.display = "block";
+    });
+</script>
 </body>
 
 </html>
