@@ -23,7 +23,8 @@
                                     <h4 class="card-title">Tambah Kendaraan</h4>
                                 </div>
                                 <div class="card-body">
-                                    <form action="<?= site_url('dashboard/tambah_kendaraan'); ?>" method="post" enctype="multipart/form-data">
+                                    <form action="<?= site_url('dashboard/tambah_kendaraan'); ?>" method="post"
+                                        enctype="multipart/form-data">
                                         <div class="form-group">
                                             <label>Nama Kendaraan</label>
                                             <input type="text" name="nama" class="form-control" required>
@@ -47,12 +48,18 @@
                                         <div class="form-group">
                                             <label>Status</label>
                                             <select name="status" class="form-control" required>
-                                                <option value="Tersedia">Tersedia</option>
-                                                <option value="Dipinjam">Dipinjam</option>
+                                                <option value="A">Tersedia</option>
+                                                <option value="U">Tidak Tersedia</option>
+                                                <option value="Us">Digunakan</option>
+                                                <option value="S">Service</option>
                                             </select>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
-                                        <a href="<?= site_url('dashboard/daftar_kendaraan'); ?>" class="btn btn-secondary">Batal</a>
+                                        <hr>
+                                        <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
+                                            <a href="<?= site_url('dashboard/daftar_kendaraan'); ?>"
+                                                class="btn btn-danger btn-sm">Batal</a>
+                                            <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -64,21 +71,21 @@
     </div>
 
     <script>
-        <?php if ($this->session->flashdata('success')): ?>
-            Swal.fire({
-                icon: 'success',
-                title: 'Sukses!',
-                text: '<?= $this->session->flashdata('success') ?>',
-                showConfirmButton: false,
-                timer: 2000
-            });
-        <?php elseif ($this->session->flashdata('error')): ?>
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: '<?= $this->session->flashdata('error') ?>',
-            });
-        <?php endif; ?>
+    <?php if ($this->session->flashdata('success')): ?>
+    Swal.fire({
+        icon: 'success',
+        title: 'Sukses!',
+        text: '<?= $this->session->flashdata('success') ?>',
+        showConfirmButton: false,
+        timer: 2000
+    });
+    <?php elseif ($this->session->flashdata('error')): ?>
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '<?= $this->session->flashdata('error') ?>',
+    });
+    <?php endif; ?>
     </script>
 
 

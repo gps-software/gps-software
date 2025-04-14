@@ -58,6 +58,9 @@
                                                 <option value="Tersedia"
                                                     <?= $kendaraan['status'] == 'A' ? 'selected' : '' ?>>Tersedia
                                                 </option>
+                                                <option value="Tersedia"
+                                                    <?= $kendaraan['status'] == 'U' ? 'selected' : '' ?>>Tidak Tersedia
+                                                </option>
                                                 <option value="Digunakan"
                                                     <?= $kendaraan['status'] == 'Us' ? 'selected' : '' ?>>
                                                     Digunakan</option>
@@ -66,6 +69,7 @@
                                                 </option>
                                             </select>
                                         </div>
+                                        <hr>
                                         <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
                                             <a href="<?= site_url('dashboard/daftar_kendaraan'); ?>"
                                                 class="btn btn-danger btn-sm">Batal</a>

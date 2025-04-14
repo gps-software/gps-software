@@ -48,8 +48,12 @@
                                             <label>No Telepon</label>
                                             <input type="text" name="no_telepon" class="form-control" required>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Simpan</button>
-                                        <a href="<?= site_url('dashboard/daftar_peminjam'); ?>" class="btn btn-secondary">Batal</a>
+                                        <hr>
+                                        <div class="d-flex flex-column flex-sm-row justify-content-between gap-2">
+                                            <a href="<?= site_url('dashboard/daftar_peminjam'); ?>"
+                                                class="btn btn-danger btn-sm">Batal</a>
+                                            <button type="submit" class="btn btn-primary btn-sm">Simpan</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
@@ -61,21 +65,21 @@
     </div>
 
     <script>
-        <?php if ($this->session->flashdata('success')): ?>
-            Swal.fire({
-                icon: 'success',
-                title: 'Sukses!',
-                text: '<?= $this->session->flashdata('success') ?>',
-                showConfirmButton: false,
-                timer: 2000
-            });
-        <?php elseif ($this->session->flashdata('error')): ?>
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: '<?= $this->session->flashdata('error') ?>',
-            });
-        <?php endif; ?>
+    <?php if ($this->session->flashdata('success')): ?>
+    Swal.fire({
+        icon: 'success',
+        title: 'Sukses!',
+        text: '<?= $this->session->flashdata('success') ?>',
+        showConfirmButton: false,
+        timer: 2000
+    });
+    <?php elseif ($this->session->flashdata('error')): ?>
+    Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '<?= $this->session->flashdata('error') ?>',
+    });
+    <?php endif; ?>
     </script>
 
 

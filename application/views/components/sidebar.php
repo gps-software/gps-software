@@ -1,9 +1,3 @@
-<!-- <style>
-.nav-item.active>a {
-    background-color: #007bff;
-    color: white;
-}
-</style> -->
 <div class="sidebar sidebar-style-2" data-background-color="dark">
     <div class="sidebar-logo">
         <!-- Logo Header -->
