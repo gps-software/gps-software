@@ -19,10 +19,9 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card">
-                                <div
-                                    class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-2">
+                                <div class="card-header d-flex justify-content-between align-items-center">
                                     <h4 class="card-title">Data Request</h4>
-                                    <div class="card-header">
+                                    <div>
                                         <a href="<?= base_url('dashboard/export_pdf') ?>"
                                             class="btn btn-info btn-sm">Export
                                             PDF</a>

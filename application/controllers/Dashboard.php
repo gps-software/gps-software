@@ -330,13 +330,50 @@ class Dashboard extends CI_Controller {
 
     public function approved_request($id) {
         $req = $this->Request_model->get_request_by_id($id);
+        $user = $this->Peminjam_model->get_peminjam_by_id($req['id_client']);
+        $car = $this->Kendaraan_model->get_kendaraan_by_id($req['id_kendaraan']);
+        // var_dump($user); die;
     
         if ($req) {
             $this->Request_model->insert_history($req);
             $this->Request_model->update_status($id, 'A');
+
+            $this->load->library('email');
+
+            // Konfigurasi email
+            $config = array(
+                'protocol'      => 'smtp',
+                'smtp_host'     => 'smtp.gmail.com',
+                'smtp_port'     => 587,
+                'smtp_user'     => 'dewipulung57@gmail.com',
+                'smtp_pass'     => 'dtwe sfqe fpfd gcdm',
+                'smtp_crypto'   => 'tls',
+                'mailtype'      => 'html',
+                'charset'       => 'utf-8',
+                'newline'       => "\r\n",
+                'wordwrap'      => TRUE
+            );
+            $this->email->initialize($config);
+
+            // Data email (ambil dari request)
+            $to = $user['email']; // pastikan field email ada di data $user
+            $subject = "Request Telah Disetujui";
+            $message = "Halo " . $user['nama'] . ",<br><br>Request Peminjaman Mobil Dengan Nama" . $car['nama'] . " Plat " . $car['plat_no']  . " Dan Warna " . $car['warna'] . " telah disetujui.<br><br>Terima kasih.";
+
+            $this->email->from('dewipulung57@gmail.com', 'Admin');
+            $this->email->to($to);
+            $this->email->subject($subject);
+            $this->email->message($message);
+
+            if ($this->email->send()) {
+                $this->session->set_flashdata('success', 'Berhasil Menyetujui Request!');
+            } else {
+                echo "<pre>";
+                print_r($this->email->print_debugger());
+                echo "</pre>";
+            }
     
             redirect('dashboard/daftar_req');
-            $this->session->set_flashdata('success', 'Berhasil Menyetujui Request!');
         } else {
             $this->session->set_flashdata('error', 'Gagal Menyetujui Request!');
         }
@@ -344,12 +381,46 @@ class Dashboard extends CI_Controller {
 
     public function rejected_request($id) {
         $req = $this->Request_model->get_request_by_id($id);
+        $user = $this->Peminjam_model->get_peminjam_by_id($req['id_client']);
+        $car = $this->Kendaraan_model->get_kendaraan_by_id($req['id_kendaraan']);
     
         if ($req) {
             $this->Request_model->insert_history($req);
             $this->Request_model->update_status($id, 'R');
+
+            // Konfigurasi email
+            $config = array(
+                'protocol'      => 'smtp',
+                'smtp_host'     => 'smtp.gmail.com',
+                'smtp_port'     => 587,
+                'smtp_user'     => 'dewipulung57@gmail.com',
+                'smtp_pass'     => 'dtwe sfqe fpfd gcdm',
+                'smtp_crypto'   => 'tls',
+                'mailtype'      => 'html',
+                'charset'       => 'utf-8',
+                'newline'       => "\r\n",
+                'wordwrap'      => TRUE
+            );
+            $this->email->initialize($config);
+
+            // Data email (ambil dari request)
+            $to = $user['email']; // pastikan field email ada di data $user
+            $subject = "Request Telah Ditolak";
+            $message = "Halo " . $user['nama'] . ",<br><br>Request Peminjaman Mobil Dengan Nama" . $car['nama'] . " Plat " . $car['plat_no']  . " Dan Warna " . $car['warna'] . " telah ditolak.<br><br>Terima kasih.";
+
+            $this->email->from('dewipulung57@gmail.com', 'Admin');
+            $this->email->to($to);
+            $this->email->subject($subject);
+            $this->email->message($message);
+
+            if ($this->email->send()) {
+                $this->session->set_flashdata('success', 'Berhasil Menolak Request!');
+            } else {
+                echo "<pre>";
+                print_r($this->email->print_debugger());
+                echo "</pre>";
+            }
     
-            $this->session->set_flashdata('success', 'Berhasil Menolak Request!');
             redirect('dashboard/daftar_req');
         } else {
             $this->session->set_flashdata('error', 'Gagal menolak request!');
