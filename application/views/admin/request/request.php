@@ -50,12 +50,12 @@
                                                     foreach ($req as $r) : ?>
                                                 <tr>
                                                     <td><?= $no++; ?></td>
-                                                    <td><?= htmlspecialchars($r['nama_client']); ?></td>
-                                                    <td><?= htmlspecialchars($r['model_kendaraan']); ?></td>
-                                                    <td><?= htmlspecialchars($r['no_reg']); ?></td>
-                                                    <td><?= htmlspecialchars($r['date']); ?></td>
+                                                    <td><?= $r['nama_client']; ?></td>
+                                                    <td><?= $r['model_kendaraan']; ?></td>
+                                                    <td><?= $r['no_reg']; ?></td>
+                                                    <td><?= $r['date']; ?></td>
                                                     <td><?php
-                                                            $status = htmlspecialchars($r['status']);
+                                                            $status = $r['status'];
 
                                                             if ($status === 'A') {
                                                                 echo '<span class="badge rounded-pill text-bg-primary">Disetujui</span>';
@@ -72,19 +72,35 @@
                                                     </td>
                                                     <td class="text-center">
                                                         <div class="d-flex flex-wrap justify-content-center gap-2">
+                                                            <?php if ($r['status'] === 'P') {?>
                                                             <a href="<?= site_url('dashboard/approved_request/' . $r['id']); ?>"
-                                                                class="btn btn-primary btn-sm <?= $r['status'] != 'P' ? 'disabled' : '' ?>"
-                                                                title="Setujui"
-                                                                <?= $r['status'] != 'P' ? 'aria-disabled="true" tabindex="-1"' : '' ?>>
-                                                                Setujui
+                                                                class="btn btn-primary btn-sm" title="Terima">
+                                                                Terima
                                                             </a>
 
                                                             <a href="<?= site_url('dashboard/rejected_request/' . $r['id']); ?>"
-                                                                class="btn btn-danger btn-sm <?= $r['status'] != 'P' ? 'disabled' : '' ?>"
-                                                                title="Tolak"
-                                                                <?= $r['status'] != 'P' ? 'aria-disabled="true" tabindex="-1"' : '' ?>>
+                                                                class="btn btn-danger btn-sm" title="Tolak">
                                                                 Tolak
                                                             </a>
+                                                            <?php } elseif ($r['status'] === 'A') { ?>
+                                                            <a href="<?= site_url('dashboard/track') ?>"
+                                                                class="btn btn-info btn-sm" title="Lacak">
+                                                                Lacak
+                                                            </a>
+                                                            <?php } elseif ($r['status'] === 'D') { ?>
+                                                            <a href="<?= site_url('dashboard/history') ?>"
+                                                                class="btn btn-info btn-sm" title="Riwayat">
+                                                                Riwayat
+                                                            </a>
+                                                            <?php } else { ?>
+                                                            <button class="btn btn-dark btn-sm disabled" title="Terima">
+                                                                Terima
+                                                            </button>
+
+                                                            <button class="btn btn-dark btn-sm disabled" title="Tolak">
+                                                                Tolak
+                                                            </button>
+                                                            <?php } ?>
                                                         </div>
                                                     </td>
                                                 </tr>

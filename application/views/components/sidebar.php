@@ -40,18 +40,18 @@
                 </li>
 
                 <li class="nav-item">
-                    <a class="<?= ($uri == 'dashboard/daftar_peminjam') ? 'bg-primary' : '' ?>"
-                        href="<?= base_url('dashboard/daftar_peminjam') ?>">
-                        <i class="fa-solid fa-users"></i>
-                        <span class="sub-item">Daftar User</span>
-                    </a>
-                </li>
-
-                <li class="nav-item">
                     <a class="<?= ($uri == 'dashboard/daftar_kendaraan') ? 'bg-primary' : '' ?>"
                         href="<?= base_url('dashboard/daftar_kendaraan') ?>">
                         <i class="fa-solid fa-car"></i>
                         <span class="sub-item">Daftar Kendaraan</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="<?= ($uri == 'dashboard/daftar_peminjam') ? 'bg-primary' : '' ?>"
+                        href="<?= base_url('dashboard/daftar_peminjam') ?>">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="sub-item">Daftar User</span>
                     </a>
                 </li>
 
@@ -85,7 +85,7 @@
                         </ul>
                     </div>
                 </li> -->
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#maps">
                         <i class="fas fa-map-marker-alt"></i>
                         <p>Maps</p>
@@ -105,7 +105,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>

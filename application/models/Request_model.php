@@ -47,5 +47,13 @@ class Request_model extends CI_Model {
         $this->db->where('id', $id);
         return $this->db->update('request', ['status' => $status]);
     }
+
+    public function get_request_count() {
+        return $this->db->count_all('request');
+    }
+
+    public function count_pending_req() {
+        return $this->db->where('status', 'P')->from('request')->count_all_results();
+    }
 }
 ?>

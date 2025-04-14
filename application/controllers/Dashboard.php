@@ -16,7 +16,11 @@ class Dashboard extends CI_Controller {
     }
 
     public function index() {
-        $this->load->view('dashboard/dashboard_view');
+        $data['vehicle_available'] = $this->Kendaraan_model->count_available_vehicles();
+        $data['vehicle_unavailable'] = $this->Kendaraan_model->count_unavailable_vehicles();
+        $data['user_count'] = $this->Peminjam_model->get_user_count();
+        $data['request_pending'] = $this->Request_model->count_pending_req();
+        $this->load->view('dashboard/dashboard_view', $data);
     }
 
     // ===================== PEMINJAM =====================
@@ -426,7 +430,16 @@ class Dashboard extends CI_Controller {
             $this->session->set_flashdata('error', 'Gagal menolak request!');
             redirect('dashboard/daftar_req');
         }
-    }    
+    }
+
+    // ===================== TRACKING =====================
+    public function track() {
+        $this->load->view('admin/tracking/track');
+    }
+
+    public function history() {
+        $this->load->view('admin/tracking/history');
+    }
       
     public function profile() {
         $get_where = ['id' => $this->session->userdata('id')];

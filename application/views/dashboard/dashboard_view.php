@@ -28,9 +28,10 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
                                         <div>
-                                            <h6><b>Jumlah Kendaraan Tersedia</b></h6>
+                                            <h6><b>Kendaraan Tersedia</b></h6>
                                         </div>
-                                        <h4 class="text-info fw-bold">170</h4>
+                                        <span
+                                            class="badge rounded-circle text-bg-primary"><?= $vehicle_available ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -40,9 +41,11 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
                                         <div>
-                                            <h6><b>Jumlah Kendaraan Sedang Dipinjam</b></h6>
+                                            <h6><b>Kendaraan Tidak Tersedia</b></h6>
                                         </div>
-                                        <h4 class="text-success fw-bold">120</h4>
+                                        <span class="badge rounded-circle text-bg-danger">
+                                            <?= $vehicle_unavailable ?>
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -52,9 +55,9 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
                                         <div>
-                                            <h6><b>Jumlah Mobil Dalam Perbaikan</b></h6>
+                                            <h6><b>User</b></h6>
                                         </div>
-                                        <h4 class="text-danger fw-bold">15</h4>
+                                        <span class="badge rounded-circle text-bg-primary"><?= $user_count ?></span>
                                     </div>
                                 </div>
                             </div>
@@ -64,9 +67,10 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-between">
                                         <div>
-                                            <h6><b>Jumlah Peminjam</b></h6>
+                                            <h6><b>Request Tertunda</b></h6>
                                         </div>
-                                        <h4 class="text-secondary fw-bold">12</h4>
+                                        <span
+                                            class="badge rounded-circle text-bg-secondary"><?= $request_pending ?></span>
                                     </div>
                                 </div>
                             </div>

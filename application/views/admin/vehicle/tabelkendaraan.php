@@ -93,10 +93,10 @@
                                                         foreach ($kendaraan as $k) : ?>
                                                     <tr>
                                                         <td><?= $no++ ?></td>
-                                                        <td><?= htmlspecialchars($k['nama']) ?></td>
-                                                        <td><?= htmlspecialchars($k['plat_no']) ?></td>
-                                                        <td><?= htmlspecialchars($k['warna']) ?></td>
-                                                        <td><?= htmlspecialchars($k['imei_gps']) ?></td>
+                                                        <td><?= $k['nama'] ?></td>
+                                                        <td><?= $k['plat_no'] ?></td>
+                                                        <td><?= $k['warna'] ?></td>
+                                                        <td><?= $k['imei_gps'] ?></td>
                                                         <td>
                                                             <?php if ($k['image']) : ?>
                                                             <img src="<?= base_url('assets/img/kendaraan/' . $k['image']) ?>"
@@ -107,7 +107,7 @@
                                                         </td>
                                                         <td class="text-center">
                                                             <?php
-                                                                $status = htmlspecialchars($k['status']);
+                                                                $status = $k['status'];
 
                                                                 if ($status === 'A') {
                                                                     echo '<span class="badge rounded-pill text-bg-success">Tersedia</span>';

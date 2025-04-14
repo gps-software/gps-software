@@ -73,6 +73,7 @@
                                                     <th>Pangkat</th>
                                                     <th>NRP</th>
                                                     <th>NIK</th>
+                                                    <th>email</th>
                                                     <th>No Telepon</th>
                                                     <th style="text-align: center;">Aksi</th>
                                                 </tr>
@@ -83,12 +84,13 @@
                                                     foreach ($peminjam as $p) : ?>
                                                 <tr>
                                                     <td><?= $no++; ?></td>
-                                                    <td><?= htmlspecialchars($p['nama']); ?></td>
-                                                    <td><?= htmlspecialchars($p['jabatan']); ?></td>
-                                                    <td><?= htmlspecialchars($p['pangkat']); ?></td>
-                                                    <td><?= htmlspecialchars($p['nrp']); ?></td>
-                                                    <td><?= htmlspecialchars($p['nik']); ?></td>
-                                                    <td><?= htmlspecialchars($p['no_telepon']); ?></td>
+                                                    <td><?= $p['nama']; ?></td>
+                                                    <td><?= $p['jabatan']; ?></td>
+                                                    <td><?= $p['pangkat']; ?></td>
+                                                    <td><?= $p['nrp']; ?></td>
+                                                    <td><?= $p['nik']; ?></td>
+                                                    <td><?= $p['email']; ?></td>
+                                                    <td><?= $p['no_telepon']; ?></td>
                                                     <td class="text-center">
                                                         <div class="d-flex flex-wrap justify-content-center gap-2">
                                                             <a href="<?= site_url('dashboard/edit_peminjam/' . $p['id']); ?>"

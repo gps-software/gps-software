@@ -38,5 +38,17 @@ class Kendaraan_model extends CI_Model {
         $nama = $result['nama'] ?? '';
         $plat = $result['plat_no'] ?? '';
         return $nama . ' - ' . $plat;
-    }    
+    }
+    
+    public function get_vehicle_count() {
+        return $this->db->count_all('kendaraan');
+    }
+
+    public function count_available_vehicles() {
+        return $this->db->where('status', 'A')->from('kendaraan')->count_all_results();
+    }
+
+    public function count_unavailable_vehicles() {
+        return $this->db->where('status', 'U')->from('kendaraan')->count_all_results();
+    }
 }
