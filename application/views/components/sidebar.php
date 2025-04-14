@@ -1,3 +1,9 @@
+<!-- <style>
+.nav-item.active>a {
+    background-color: #007bff;
+    color: white;
+}
+</style> -->
 <div class="sidebar sidebar-style-2" data-background-color="dark">
     <div class="sidebar-logo">
         <!-- Logo Header -->
@@ -22,20 +28,48 @@
     </div>
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
+            <?php $uri = uri_string(); ?>
             <ul class="nav nav-secondary">
                 <li class="nav-item">
-                    <a href=<?php echo base_url('dashboard')?> class="collapsed">
+                    <a class="<?= ($uri == 'dashboard') ? 'bg-primary' : '' ?>" href=<?php echo base_url('dashboard')?>
+                        class="collapsed">
                         <i class="fas fa-home"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
+
                 <li class="nav-section">
                     <span class="sidebar-mini-icon">
                         <i class="fa fa-ellipsis-h"></i>
                     </span>
                     <h4 class="text-section">Data Tabel</h4>
                 </li>
+
                 <li class="nav-item">
+                    <a class="<?= ($uri == 'dashboard/daftar_peminjam') ? 'bg-primary' : '' ?>"
+                        href="<?= base_url('dashboard/daftar_peminjam') ?>">
+                        <i class="fa-solid fa-users"></i>
+                        <span class="sub-item">Daftar User</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="<?= ($uri == 'dashboard/daftar_kendaraan') ? 'bg-primary' : '' ?>"
+                        href="<?= base_url('dashboard/daftar_kendaraan') ?>">
+                        <i class="fa-solid fa-car"></i>
+                        <span class="sub-item">Daftar Kendaraan</span>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="<?= ($uri == 'dashboard/daftar_req') ? 'bg-primary' : '' ?>"
+                        href="<?= base_url('dashboard/daftar_req') ?>">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span class="sub-item">Daftar Request</span>
+                    </a>
+                </li>
+
+                <!-- <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#tables">
                         <i class="fas fa-table"></i>
                         <p>Tabel</p>
@@ -56,7 +90,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a data-bs-toggle="collapse" href="#maps">
                         <i class="fas fa-map-marker-alt"></i>
