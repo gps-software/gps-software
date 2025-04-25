@@ -195,9 +195,15 @@
                                     <input type="number" class="form-control" id="nik" name="nik" required>
                                 </div>
 
-                                <div class="col-md-12">
+                                <div class="col-md-6">
                                     <label for="no_telepon" class="form-label fw-bold">No. Telepon</label>
                                     <input type="number" class="form-control" id="no_telepon" name="no_telepon"
+                                        required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label fw-bold">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email"
                                         required>
                                 </div>
 

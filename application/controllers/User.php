@@ -49,6 +49,7 @@ class User extends CI_Controller {
                 'nrp' => $this->input->post('nrp'),
                 'nik' => $this->input->post('nik'),
                 'no_telepon' => $this->input->post('no_telepon'),
+                'email' => $this->input->post('email'),
                 'created_date' => date('Y-m-d H:i:s'),
                 'updated_date' => date('Y-m-d H:i:s')
             );
@@ -66,12 +67,13 @@ class User extends CI_Controller {
                 'id_kendaraan' => $this->input->post('id_kendaraan'),
                 'no_reg' => 'REQ-' . strtoupper(random_string('alnum', 8)),
                 'date' => date('Y-m-d H:i:s'),
-                'status' => 'Pending',
+                'status' => 'P',
                 'created_date' => date('Y-m-d H:i:s'),
                 'updated_date' => date('Y-m-d H:i:s')
             );
-            $insert_id = $this->User_model->insert_pinjaman($pinjaman_data);
-            $this->User_model->update_kendaraan($this->input->post('id_kendaraan'), ['status' => 'Tidak Tersedia']);
+            $insert_id = $this->User_model->insert_history($pinjaman_data);
+            $insert_id = $this->User_model->insert_req($pinjaman_data);
+            $this->User_model->update_kendaraan($this->input->post('id_kendaraan'), ['status' => 'U']);
             
             if ($insert_id) {
                 $this->session->set_flashdata('message', 'Permohonan peminjaman berhasil diajukan!');

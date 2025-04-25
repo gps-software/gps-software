@@ -36,8 +36,8 @@ class Request_model extends CI_Model {
             'no_reg'        => $req['no_reg'],
             'date'          => $req['date'],
             'status'        => $req['status'],
-            'created_date'  => $req['created_date'],
-            'updated_date'  => $req['updated_date'],
+            'created_date'  => date('Y-m-d H:i:s'),
+            'updated_date'  => date('Y-m-d H:i:s'),
         ];
         
         return $this->db->insert('request_history', $data);

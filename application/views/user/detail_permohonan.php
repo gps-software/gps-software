@@ -215,6 +215,24 @@
         margin-bottom: 20px;
         text-decoration: none;
     }
+
+    .return-button {
+        display: inline-block;
+        background: #2e7d32;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+        text-decoration: none;
+    }
+
+    .back-button:hover {
+        color: white;
+    }
+
+    .return-button:hover {
+        color: white;
+    }
     </style>
 </head>
 
@@ -235,6 +253,7 @@
         <h2>Detail Permohonan: <?= $detail[0]['no_reg'] ?></h2>
 
         <a href="<?= base_url('user/check_nik') ?>" class="back-button">Kembali ke Daftar Permohonan</a>
+        <a href="<?= base_url('user/pengembalian') ?>" class="return-button">Kembalikan Mobil</a>
 
         <?php foreach($detail as $d): ?>
         <div class="riwayat-item">

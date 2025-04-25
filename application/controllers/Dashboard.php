@@ -333,6 +333,7 @@ class Dashboard extends CI_Controller {
     }
 
     public function approved_request($id) {
+        $this->Request_model->update_status($id, 'A');
         $req = $this->Request_model->get_request_by_id($id);
         $user = $this->Peminjam_model->get_peminjam_by_id($req['id_client']);
         $car = $this->Kendaraan_model->get_kendaraan_by_id($req['id_kendaraan']);
@@ -340,7 +341,6 @@ class Dashboard extends CI_Controller {
     
         if ($req) {
             $this->Request_model->insert_history($req);
-            $this->Request_model->update_status($id, 'A');
 
             $this->load->library('email');
 
@@ -384,12 +384,12 @@ class Dashboard extends CI_Controller {
     }
 
     public function rejected_request($id) {
+        $this->Request_model->insert_history($req);
         $req = $this->Request_model->get_request_by_id($id);
         $user = $this->Peminjam_model->get_peminjam_by_id($req['id_client']);
         $car = $this->Kendaraan_model->get_kendaraan_by_id($req['id_kendaraan']);
     
         if ($req) {
-            $this->Request_model->insert_history($req);
             $this->Request_model->update_status($id, 'R');
 
             // Konfigurasi email

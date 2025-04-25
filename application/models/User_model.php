@@ -42,7 +42,7 @@ class User_model extends CI_Model {
     }
 
     public function get_kendaraan($limit = 10) {
-        return $this->db->limit($limit)->where('status', 'Tersedia')->get('kendaraan')->result_array();
+        return $this->db->limit($limit)->where('status', 'A')->get('kendaraan')->result_array();
     }
 
     public function get_kendaraan_by_kategori($kategori) {
@@ -74,7 +74,7 @@ class User_model extends CI_Model {
 
     public function get_riwayat_by_no_reg($no_reg) {
         $this->db->select('p.*, k.nama as nama_kendaraan, k.plat_no');
-        $this->db->from('request p');
+        $this->db->from('request_history p');
         $this->db->join('kendaraan k', 'p.id_kendaraan = k.id');
         $this->db->where('p.no_reg', $no_reg);
         $this->db->order_by('p.created_date', 'DESC');
@@ -106,7 +106,12 @@ class User_model extends CI_Model {
         return $this->db->update('kendaraan', $data);
     }
     
-    public function insert_pinjaman($data) {
+    public function insert_history($data) {
+        $this->db->insert('request_history', $data);
+        return $this->db->insert_id();
+    }
+    
+    public function insert_req($data) {
         $this->db->insert('request', $data);
         return $this->db->insert_id();
     }
