@@ -104,11 +104,43 @@ class User extends CI_Controller {
     
     public function detail_permohonan($no_reg) {
         $nik = $this->session->userdata('nik');
+        $data['no_reg'] = $no_reg;
+
         if(!$nik) {
             redirect('user');
         }
         $data['detail'] = $this->User_model->get_riwayat_by_no_reg($no_reg);
         $this->load->view('user/detail_permohonan', $data);
+    }
+
+    public function pengajuan_pengembalian($no_reg) {
+        $request = $this->User_model->get_request_by_no_reg($no_reg);        
+        if (!$request) {
+            $this->session->set_flashdata('errors', 'Data permohonan tidak ditemukan.');
+            redirect('user/check_nik');
+        }
+
+        $update_data = [
+            'status' => 'RR',
+            'updated_date' => date('Y-m-d H:i:s')
+        ];
+        $this->User_model->update_request($request->id, $update_data);
+
+        // $this->User_model->update_kendaraan($request->id_kendaraan, ['status' => 'A']);
+
+        $history_data = [
+            'id_client'    => $request->id_client,
+            'id_kendaraan' => $request->id_kendaraan,
+            'no_reg'       => $request->no_reg,
+            'date'         => date('Y-m-d H:i:s'),
+            'status'       => 'RR',
+            'created_date' => date('Y-m-d H:i:s'),
+            'updated_date' => date('Y-m-d H:i:s')
+        ];
+        $this->User_model->insert_history($history_data);
+
+        $this->session->set_flashdata('message', 'Pengajuan Pengembalian berhasil diproses.');
+        redirect('user/check_nik');
     }
     
 }

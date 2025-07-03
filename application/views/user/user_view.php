@@ -185,8 +185,8 @@
                         <p class="sub-judul">Plat Nomor: <?= $mobil['plat_no'] ?></p>
                         <img src="<?= base_url('assets/img/' . $mobil['image']) ?>" alt="<?= $mobil['nama'] ?>">
                         <p class="status">Status:
-                            <span style="color: <?= ($mobil['status'] == 'U') ? 'green' : 'red'; ?>;">
-                                <?= $mobil['status'] ?>
+                            <span style="color: green">
+                                Tersedia
                             </span>
                         </p>
                         <a href="<?= base_url('user/pinjam_mobil/' . $mobil['id']) ?>" class="btn btn-primary 
@@ -220,8 +220,8 @@
                         <p class="sub-judul">Plat Nomor: ${mobil.plat_no}</p>
                         <img src="<?= base_url('assets/img/') ?>${mobil.image}" alt="${mobil.nama}">
                         <p class="status">Status:
-                            <span style="color: ${mobil.status == 'A' ? 'green' : 'red'};">
-                                ${mobil.status}
+                            <span style="color: green">
+                                Tersedia
                             </span>
                         </p>
                         <a href="http://localhost/gps-software/user/pinjam_mobil/${mobil.id}" class="btn btn-primary ${mobil.status == 'U' ? 'disabled' : ''}">

@@ -249,11 +249,25 @@
         </div>
     </nav>
 
+    <?php
+        $adaDisetujui = false;
+        foreach($detail as $d) {
+            if (htmlspecialchars($d['status']) === 'RR') {
+                $adaDisetujui = true;
+                break;
+            }
+        }
+    ?>
     <div class="container" style="padding-top: 100px;">
         <h2>Detail Permohonan: <?= $detail[0]['no_reg'] ?></h2>
 
         <a href="<?= base_url('user/check_nik') ?>" class="back-button">Kembali ke Daftar Permohonan</a>
-        <a href="<?= base_url('user/pengembalian') ?>" class="return-button">Kembalikan Mobil</a>
+        <?php if ($adaDisetujui): ?>
+        <a href="#" class="return-button disabled" tabindex="-1" aria-disabled="true"
+            style="pointer-events:none;opacity:0.6;">Kembalikan Mobil</a>
+        <?php else: ?>
+        <a href="<?= base_url('user/pengajuan_pengembalian/' . $no_reg) ?>" class="return-button">Kembalikan Mobil</a>
+        <?php endif; ?>
 
         <?php foreach($detail as $d): ?>
         <div class="riwayat-item">
@@ -271,6 +285,8 @@
                             echo '<span class="badge rounded-pill text-bg-info">Selesai</span>';
                         } elseif ($status === 'P') {
                             echo '<span class="badge rounded-pill text-bg-info">Pending</span>';
+                        } elseif ($status === 'RR') {
+                            echo '<span class="badge rounded-pill text-bg-warning">Pengajuan Pengembalian</span>';
                         } else {
                             echo '<span class="badge rounded-pill text-bg-dark">' . $status . '</span>';
                         }
@@ -290,6 +306,8 @@
                     echo '<p>Selesai Pada:</p>'. date('d F Y H:i', strtotime($d['updated_date']));
                 } elseif ($status === 'P') {
                     echo '<p>Pending</p>';
+                } elseif ($status === 'RR') {
+                    echo '<p>Pengajuan Pengembalian</p>';
                 } else {
                     echo '<p>' . $status . '</p>';
                 }

@@ -32,6 +32,17 @@ class User_model extends CI_Model {
         return $this->db->get_where($table, $data);
     }
 
+    public function get_request_by_no_reg($no_reg) {
+        $this->db->where('no_reg', $no_reg);
+        $query = $this->db->get('request');
+        return $query->row();
+    }
+
+    public function update_request($id, $data) {
+        $this->db->where('id', $id);
+        return $this->db->update('request', $data);
+    }
+
     public function updateUser($id, $data) {
         $this->db->where('id', $id);
         return $this->db->update('auth', $data);

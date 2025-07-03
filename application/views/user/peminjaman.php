@@ -242,6 +242,7 @@
                     <?php
                         $icons = [
                             'P' => '⏳',
+                            'RR' => '⏳',
                             'A' => '✅',
                             'D' => '✔️',
                             'R' => '❌'
@@ -249,6 +250,7 @@
 
                         $labels = [
                             'P' => ['label' => 'Tertunda', 'class' => 'bg-secondary'],
+                            'RR' => ['label' => 'Pengajuan Pengembalian', 'class' => 'bg-secondary'],
                             'A' => ['label' => 'Disetujui', 'class' => 'bg-primary'],
                             'D' => ['label' => 'Selesai', 'class' => 'bg-success'],
                             'R' => ['label' => 'Ditolak', 'class' => 'bg-danger'],
